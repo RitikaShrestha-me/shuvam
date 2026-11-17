@@ -1,0 +1,262 @@
+/* Hero: who I am, what I'm looking for, and the next click. Everything is visible on load. */
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  padding: 6px 14px;
+  border: 1px solid color-mix(in srgb, var(--teal) 40%, transparent);
+  border-radius: 99px;
+  font:
+    12px ui-monospace,
+    Menlo,
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--teal);
+  background: color-mix(in srgb, var(--teal) 6%, transparent);
+}
+.hero-eyebrow i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  box-shadow: 0 0 10px var(--teal);
+  animation: led 1.4s infinite alternate;
+}
+.hero-title {
+  font-size: clamp(40px, 6vw, 82px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin: 0;
+  font-weight: 700;
+}
+.hero-title em {
+  font-style: normal;
+  background: linear-gradient(90deg, var(--teal), var(--gold));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.hero-lead {
+  color: var(--soft);
+  font-size: clamp(17px, 1.5vw, 20px);
+  max-width: 54ch;
+  margin: 22px 0 0;
+}
+.hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 99px;
+  font:
+    500 16px "IBM Plex Sans",
+    system-ui,
+    sans-serif;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: color-mix(in srgb, var(--card) 60%, transparent);
+  cursor: pointer;
+  transition:
+    transform 0.2s,
+    border-color 0.2s,
+    background 0.2s;
+}
+.btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--teal);
+}
+.btn.primary {
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
+}
+.btn.primary:hover {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--paper);
+}
+.hero-facts {
+  list-style: none;
+  margin: 36px 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.hero-facts li {
+  padding: 16px 16px 0 0;
+  border-top: 1px solid var(--line);
+}
+.hero-facts small {
+  display: block;
+  font:
+    11px ui-monospace,
+    Menlo,
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 6px;
+}
+.hero-facts span {
+  font-size: 15px;
+  color: var(--soft);
+  line-height: 1.45;
+  display: block;
+}
+.hero-agent {
+  display: grid;
+  justify-items: center;
+  gap: 18px;
+  padding: 26px 22px 24px;
+  border: 1px solid color-mix(in srgb, var(--teal) 30%, transparent);
+  border-radius: 28px;
+  background:
+    radial-gradient(
+      circle at 50% 28%,
+      color-mix(in srgb, var(--teal) 14%, transparent),
+      transparent 62%
+    ),
+    color-mix(in srgb, var(--card) 70%, transparent);
+}
+.hero-agent .botStage {
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+}
+.hero-agent .bubble {
+  margin: 0;
+  max-width: 30ch;
+  text-align: left;
+  border-radius: 18px 18px 18px 4px;
+}
+.hero-agent #bot {
+  width: 170px;
+}
+.hero-ask {
+  width: 100%;
+  text-align: center;
+}
+.hero-ask small {
+  display: block;
+  color: var(--soft);
+  font:
+    12px ui-monospace,
+    Menlo,
+    monospace;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.hero-ask .chips {
+  justify-content: center;
+  margin: 0;
+}
+.hero-mic {
+  margin-top: 14px;
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+.hero-agent {
+  animation: rise 0.8s 0.2s ease both;
+}
+
+/* ---- Scroll-driven hero: the stage stays pinned while the text appears as you scroll ---- */
+:root { --nav-h: 66px; }
+.hero { position: relative; }
+.hero-stick {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(24px, 5vw, 64px);
+  align-items: center;
+  min-height: calc(100vh - var(--nav-h));
+  min-height: calc(100svh - var(--nav-h));
+  padding: 24px 0 56px;
+}
+/* Everything is visible by default (no JS, reduced motion). Once hero-reveal.js runs it adds .live. */
+.hero.live { height: 340vh; }
+.hero.live .hero-stick {
+  position: sticky;
+  top: var(--nav-h);
+  height: calc(100vh - var(--nav-h));
+  height: calc(100svh - var(--nav-h));
+  min-height: 0;
+  padding-bottom: 24px;
+}
+.hero-title .w,
+.hero-lead .w { display: inline-block; white-space: pre; will-change: opacity, transform; }
+.hero-title em .w { background: inherit; -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-lead { min-height: 1px; }
+.hero-facts { margin-top: 30px; }
+.hero-cta .btn.cv {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: var(--paper);
+  font-weight: 600;
+}
+.hero-cta .btn.cv:hover { transform: translateY(-2px) scale(1.03); }
+.hero.live .hero-cta .btn.cv.pop { animation: cvpop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both; }
+@keyframes cvpop { from { transform: scale(0.8); } to { transform: scale(1); } }
+.hero-cue {
+  position: absolute;
+  left: 0;
+  bottom: 6px;
+  margin: 0;
+  display: none;
+  align-items: center;
+  gap: 10px;
+  font: 12px ui-monospace, Menlo, monospace;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--soft);
+  transition: opacity 0.3s;
+}
+.hero.live .hero-cue { display: flex; }
+.hero-cue i {
+  width: 14px;
+  height: 22px;
+  border: 2px solid var(--soft);
+  border-radius: 8px;
+  position: relative;
+}
+.hero-cue i::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  top: 4px;
+  width: 3px;
+  height: 5px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--teal);
+  animation: wheel 1.4s ease-in-out infinite;
+}
+@keyframes wheel { 60% { transform: translateY(7px); opacity: 0; } 100% { opacity: 0; } }
+.hero-agent { animation: rise 0.8s 0.2s ease both; }
+
+@media (max-width: 900px) {
+  /* small screens: no pinning, each line fades in as it scrolls into view */
+  .hero-stick { grid-template-columns: 1fr; min-height: 0; padding: 20px 0 40px; }
+  .hero.live { height: auto; }
+  .hero.live .hero-stick { position: static; height: auto; }
+  .hero.live .hero-cue { display: none; }
+  .hero-facts { grid-template-columns: 1fr; }
+  .hero-facts li { padding-bottom: 6px; }
+  .hero-copy { padding-bottom: 8vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hero-agent { animation: none; }
+}

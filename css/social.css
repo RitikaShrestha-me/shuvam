@@ -1,0 +1,96 @@
+/* Social links: a handle on the right edge, vertically centred. Move to it (or tap it)
+   and an icon dock slides out, like the macOS Dock; icons grow as the pointer nears them. */
+.sdock {
+  position: fixed;
+  right: 0;
+  top: 50%;
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  transform: translateY(-50%) translateX(calc(100% - 26px));
+  transition: transform 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* invisible wider hit area so the edge is easy to find */
+.sdock::before { content: ""; position: absolute; left: -14px; top: -20px; bottom: -20px; width: 40px; }
+.sdock.open,
+.sdock:hover,
+.sdock:focus-within { transform: translateY(-50%) translateX(0); }
+.sd-tab {
+  flex: none;
+  width: 26px;
+  height: 84px;
+  display: grid;
+  place-items: center;
+  padding: 0;
+  border: 1px solid var(--line);
+  border-right: 0;
+  border-radius: 14px 0 0 14px;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(10px);
+  color: var(--teal);
+  cursor: pointer;
+  box-shadow: -4px 6px 22px var(--shadow);
+}
+.sd-tab svg { transition: transform 0.3s; }
+.sdock.open .sd-tab svg,
+.sdock:hover .sd-tab svg { transform: rotate(180deg); }
+.sd-list {
+  list-style: none;
+  margin: 0;
+  padding: 12px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--line);
+  border-right: 0;
+  border-radius: 20px 0 0 20px;
+  background: color-mix(in srgb, var(--card) 88%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  box-shadow: -8px 10px 30px var(--shadow);
+}
+.sd-list li { position: relative; display: block; }
+.sd-list a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 13px;
+  color: var(--ink);
+  background: color-mix(in srgb, var(--ink) 7%, transparent);
+  border: 1px solid var(--line);
+  transform-origin: right center;
+  transform: scale(var(--s, 1));
+  transition: transform 0.12s ease-out, background 0.2s, color 0.2s, border-color 0.2s;
+}
+.sd-list a:hover,
+.sd-list a:focus-visible { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.sd-list svg { width: 22px; height: 22px; }
+/* tooltip label to the left of the icon */
+.sd-list a span {
+  position: absolute;
+  right: calc(100% + 14px);
+  top: 50%;
+  transform: translateY(-50%) translateX(6px);
+  padding: 5px 11px;
+  border-radius: 8px;
+  background: var(--ink);
+  color: var(--paper);
+  font: 500 13px "IBM Plex Sans", system-ui, sans-serif;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, transform 0.15s;
+}
+.sd-list a:hover span,
+.sd-list a:focus-visible span { opacity: 1; transform: translateY(-50%); }
+@media (max-width: 520px) {
+  .sdock { transform: translateY(-50%) translateX(calc(100% - 22px)); }
+  .sd-tab { width: 22px; height: 64px; }
+  .sd-list a { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sdock { transition: none; }
+  .sd-list a { transform: none; }
+}
